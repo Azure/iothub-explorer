@@ -29,6 +29,7 @@ var onNewResults = function(err, results) {
     serviceError(err);
   } else {
     results.forEach(function(twin) {
+      delete twin._registry;
       var output = program.raw ? JSON.stringify(twin) : prettyjson.render(twin);
       console.log(output);
     });
