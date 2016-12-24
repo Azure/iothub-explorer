@@ -27,6 +27,8 @@ var registry = Registry.fromSharedAccessSignature(sas);
 registry.getTwin(deviceId, function (err, twin) {
   if (err) serviceError(err);
   else {
+    // The _registry property that shouldn't be printed and make prettyjson crash.
+    delete twin._registry;
     var output = program.raw ? JSON.stringify(twin) : prettyjson.render(twin);
     console.log(output);
   }
