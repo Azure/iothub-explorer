@@ -44,6 +44,8 @@ registry.getTwin(deviceId, function (err, twin){
       if (err) {
         serviceError(err);
       } else {
+        // The _registry property that shouldn't be printed and make prettyjson crash.
+        delete updatedTwin._registry;
         var output = program.raw ? JSON.stringify(updatedTwin) : prettyjson.render(updatedTwin);
         console.log(output);
       }
