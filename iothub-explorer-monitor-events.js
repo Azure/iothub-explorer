@@ -50,7 +50,7 @@ ehClient.open()
               });
               receiver.on('message', function (eventData) {
                 if (program.raw) {
-                  console.log(JSON.stringify(eventData));
+                  console.log(eventData.body);
                 } else {
                   if (deviceId) {
                     if (eventData.systemProperties['iothub-connection-device-id'] === deviceId) {
