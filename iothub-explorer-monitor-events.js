@@ -50,17 +50,17 @@ ehClient.open()
               });
               receiver.on('message', function (eventData) {
                 if (program.raw) {
-                  console.log(eventData.body);
+                  console.log(eventData.body.toString());
                 } else {
                   if (deviceId) {
                     if (eventData.systemProperties['iothub-connection-device-id'] === deviceId) {
-                      console.log((typeof eventData.body === 'string') ? eventData.body : JSON.stringify(eventData.body, null, 2));
+                      console.log(eventData.body.toString());
                       console.log('-------------------');
                     }
                     // ignore message otherwise.
                   } else {
                     console.log(colorsTmpl('{bold}From: {green}' + eventData.systemProperties['iothub-connection-device-id'] + '{/green}{/bold}'));
-                    console.log((typeof eventData.body === 'string') ? eventData.body : JSON.stringify(eventData.body, null, 2));
+                    console.log(eventData.body.toString());
                     console.log('-------------------');
                   }
                 }
