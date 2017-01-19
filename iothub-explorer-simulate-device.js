@@ -163,10 +163,16 @@ function simulateDevice() {
     if (program.receive) {
       var receiveCounter = 0;
       var onMessage = function(msg) {
-        printSuccess('-----------------');
+        printSuccess('==================');
         printSuccess('Message received:');
         console.log(prettyjson.render(msg.data.toString()));
-        printSuccess('-----------------');
+        if (msg.properties.count() > 0) {
+          printSuccess('--- properties ---');
+          msg.properties.propertyList.forEach(function(prop) {
+            console.log(prop.key + ': ' + prop.value);
+          });
+        }
+        printSuccess('==================');
         receiveCounter++;
         if (receiveCounter === receiveCount) {
           receiveRunning = false;

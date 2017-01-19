@@ -49,21 +49,32 @@ ehClient.open()
                 serviceError(error.message);
               });
               receiver.on('message', function (eventData) {
-                if (program.raw) {
+                var from = eventData.annotations['iothub-connection-device-id'];
+                var raw = program.raw;
+
+                if (!raw) console.log('==== From: ' + from + ' ====');
+                if (eventData.body instanceof Buffer) {
                   console.log(eventData.body.toString());
+                } else if (typeof eventData.body === 'string') {
+                  console.log(eventData instanceof Buffer ? eventData.body.toString() : JSON);
                 } else {
-                  if (deviceId) {
-                    if (eventData.systemProperties['iothub-connection-device-id'] === deviceId) {
-                      console.log(eventData.body.toString());
-                      console.log('-------------------');
-                    }
-                    // ignore message otherwise.
+                  if (!raw) {
+                    console.log(JSON.stringify(eventData.body, null, 2));
                   } else {
-                    console.log(colorsTmpl('{bold}From: {green}' + eventData.systemProperties['iothub-connection-device-id'] + '{/green}{/bold}'));
-                    console.log(eventData.body.toString());
-                    console.log('-------------------');
+                    console.log(JSON.stringify(eventData.body));
                   }
                 }
+
+                if (eventData.applicationProperties) {
+                  if (!raw) {
+                    console.log('---- properties ----');
+                    console.log(JSON.stringify(eventData.applicationProperties, null, 2));
+                  } else {
+                    console.log(JSON.stringify(eventData.applicationProperties));
+                  }
+                }
+
+                if (!raw) console.log('====================');
               });
             });
           });
