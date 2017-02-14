@@ -50,7 +50,7 @@ describe('iothub-explorer', function() {
 
   describe('send/receive messages', function() {
     var testDeviceId = 'ihtests-' + uuid.v4();
-    var testMessageBody = uuid.v4();
+    var testMessageBody = JSON.stringify({ key: "value" });
 
     before(function(beforeCallback) {
       var createProc = fork('./iothub-explorer-create.js', ['--login', iothubConnectionString, testDeviceId], { silent: true });

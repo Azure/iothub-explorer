@@ -55,7 +55,7 @@ function createMessageFromArgument(messageArg, ack) {
       message = tmpMessage;
       message.ack = tmpMessage.ack || ack;
     } else {
-      message = createMessage(tmpMessage);
+      message = createMessage(messageArg);
     }
   } catch(e) {
     if (e instanceof SyntaxError) {
