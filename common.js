@@ -98,12 +98,11 @@ function printSuccess(message) {
  * printDevice will display a device either pretty-printed or as raw JSON.
  * 
  * @param {any} device                  The device object received from the IoT hub registry.
- * @param {any} hubHostName             used in case showConnectionString is true.
+ * @param {any} hubHostName             used to build the connection string.
  * @param {any} propertyFilter          Filter the properties that should be displayed.
- * @param {any} showConnectionString    Boolean indicating whether the connection string should be printed out (requires hubHostName)
  * @param {any} rawOutput               Boolean indicating whether the output should be pretty-printed or displayed as raw JSON.
  */
-function printDevice(device, hubHostName, propertyFilter, showConnectionString, rawOutput) {
+function printDevice(device, hubHostName, propertyFilter, rawOutput) {
   var filtered = {};
   if (propertyFilter) {
     var props = propertyFilter.split(',');
@@ -132,9 +131,8 @@ function printDevice(device, hubHostName, propertyFilter, showConnectionString, 
   }
 
   var result = filtered;
-  if (showConnectionString) {
-    result.connectionString = createDeviceConnectionString(device, hubHostName);
-  }
+  result.connectionString = createDeviceConnectionString(device, hubHostName);
+  
 
   var output = rawOutput ? JSON.stringify(result) : prettyjson.render(result);
   console.log(output);

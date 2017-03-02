@@ -16,7 +16,7 @@ program
   .option('-l, --login <connection-string>', 'use the connection string provided as argument to use to authenticate with your IoT hub')
   .option('-d, --display <property-filter>', 'filter the properties of the device that should be displayed using a comma-separated list of property names')
   .option('-r, --raw', 'use this flag to return raw output instead of pretty-printed output')
-  .option('--connection-string', 'show the connection string for the newly created device')
+  .option('-c, --connection-string', '[deprecated] The connection string is now displayed by default')
   .parse(process.argv);
 
 var sas = getSas(program.login);
@@ -27,7 +27,7 @@ registry.list(function (err, devices) {
   else {
     var host = getHostFromSas(sas);
     devices.forEach(function (device) {
-      printDevice(device, host, program.display, program.connectionString, program.raw);
+      printDevice(device, host, program.display, program.raw);
     });
   }
 });

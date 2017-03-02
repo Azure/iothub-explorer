@@ -15,7 +15,7 @@ var Registry = require('azure-iothub').Registry;
 program
   .description('Get a device identity from your IoT hub device registry')
   .usage('[options] <device-id>')
-  .option('-c, --connection-string', 'show the connection string for the newly created device')
+  .option('-c, --connection-string', '[deprecated] The connection string is now displayed by default')
   .option('-d, --display <property-filter>', 'filter the properties of the device that should be displayed using a comma-separated list of property names')
   .option('-l, --login <connection-string>', 'use the connection string provided as argument to use to authenticate with your IoT Hub instance')
   .option('-r, --raw', 'use this flag to return raw output instead of pretty-printed output')
@@ -30,6 +30,6 @@ registry.get(deviceId, function (err, device) {
   if (err) serviceError(err);
   else {
     var host = getHostFromSas(sas);
-    printDevice(device, host, program.display, program.connectionString, program.raw);
+    printDevice(device, host, program.display, program.raw);
   }
 });

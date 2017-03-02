@@ -20,7 +20,7 @@ program
   .description('Create a device identity in your IoT Hub device registry, either using the specified device id or JSON description.')
   .usage('[options] [device-id|device-json]')
   .option('-a, --auto', 'create a device with an auto-generated device id')
-  .option('-cs, --connection-string', 'show the connection string for the newly created device')
+  .option('-cs, --connection-string', '[deprecated] The connection string is now displayed by default')
   .option('-d, --display <property-filter>', 'comma-separated list of device properties that should be displayed')
   .option('-l, --login <connection-string>', 'connection string to use to authenticate with your IoT Hub instance')
   .option('-k1, --key1 <key>', 'specify the primary key for newly created device')
@@ -98,7 +98,7 @@ function createDevice(deviceInfo) {
     else {
       printSuccess('Created device ' + deviceInfo.deviceId);
       var host = getHostFromSas(sas);
-      printDevice(createdDeviceInfo, host, program.display, program.connectionString, program.raw);
+      printDevice(createdDeviceInfo, host, program.display, program.raw);
     }
   });
 }
