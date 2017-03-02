@@ -51,30 +51,31 @@ ehClient.open()
               receiver.on('message', function (eventData) {
                 var from = eventData.annotations['iothub-connection-device-id'];
                 var raw = program.raw;
-
-                if (!raw) console.log('==== From: ' + from + ' ====');
-                if (eventData.body instanceof Buffer) {
-                  console.log(eventData.body.toString());
-                } else if (typeof eventData.body === 'string') {
-                  console.log(eventData instanceof Buffer ? eventData.body.toString() : JSON);
-                } else {
-                  if (!raw) {
-                    console.log(JSON.stringify(eventData.body, null, 2));
+                if (!deviceId || (deviceId && from === deviceId)) {
+                  if (!raw) console.log('==== From: ' + from + ' ====');
+                  if (eventData.body instanceof Buffer) {
+                    console.log(eventData.body.toString());
+                  } else if (typeof eventData.body === 'string') {
+                    console.log(eventData instanceof Buffer ? eventData.body.toString() : JSON);
                   } else {
-                    console.log(JSON.stringify(eventData.body));
+                    if (!raw) {
+                      console.log(JSON.stringify(eventData.body, null, 2));
+                    } else {
+                      console.log(JSON.stringify(eventData.body));
+                    }
                   }
-                }
 
-                if (eventData.applicationProperties) {
-                  if (!raw) {
-                    console.log('---- properties ----');
-                    console.log(JSON.stringify(eventData.applicationProperties, null, 2));
-                  } else {
-                    console.log(JSON.stringify(eventData.applicationProperties));
+                  if (eventData.applicationProperties) {
+                    if (!raw) {
+                      console.log('---- properties ----');
+                      console.log(JSON.stringify(eventData.applicationProperties, null, 2));
+                    } else {
+                      console.log(JSON.stringify(eventData.applicationProperties));
+                    }
                   }
-                }
 
-                if (!raw) console.log('====================');
+                  if (!raw) console.log('====================');
+                }
               });
             });
           });
