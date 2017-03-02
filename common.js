@@ -10,6 +10,7 @@ var fs = require('fs');
 var colorsTmpl = require('colors-tmpl');
 var prettyjson = require('prettyjson');
 var uuid = require('uuid');
+var _ = require('lodash');
 
 // sdk dependencies
 var errors = require('azure-iot-common').errors;
@@ -52,7 +53,7 @@ function createMessageFromArgument(messageArg, ack) {
   try {
     var tmpMessage = JSON.parse(messageArg);
     if (tmpMessage.messageId) {
-      message = tmpMessage;
+      message = _.merge(new Message(), tmpMessage);
       message.ack = tmpMessage.ack || ack;
     } else {
       message = createMessage(messageArg);
