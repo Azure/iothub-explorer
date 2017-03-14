@@ -78,13 +78,13 @@ blobSvc.createContainerIfNotExists(inputContainerName, function (error) {
               if (error) {
                 serviceError('Could not start device import job: ' + error.message + ' : ' + error.responseBody);
               } else {
-                var jobId = JSON.parse(result).jobId;
+                var jobId = result.jobId;
                 var interval = setInterval(function () {
                   registry.getJob(jobId, function (error, result) {
                     if (error) {
                       serviceError('Could not get import job status: ' + error.message + ' : ' + error.responseBody);
                     } else {
-                      var status = JSON.parse(result).status;
+                      var status = result.status;
                       printSuccess('Job Id: '+ jobId + ': ' + status);
                       if (status === "completed") {
                         clearInterval(interval);
