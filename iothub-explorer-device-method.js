@@ -32,9 +32,22 @@ if(!methodName) inputError('Please provide a valid method name');
 var sas = getSas(program.login);
 
 var client = Client.fromSharedAccessSignature(sas);
+
+var actualPayload = methodPayload;
+
+if (methodPayload) {
+  try {
+    actualPayload = JSON.parse(methodPayload);
+  } catch (err) {
+    if (!(err instanceof SyntaxError)) {
+      throw err;
+    }
+  }
+}
+
 var methodParams = {
   methodName: methodName,
-  payload: methodPayload || null,
+  payload: actualPayload || null,
   timeoutInSeconds: !!methodTimeout ? parseInt(methodTimeout) : null
 };
 
