@@ -1,4 +1,5 @@
-#iothub-explorer
+# iothub-explorer
+
 A CLI tool to manage device identities in your IoT hub registry, send and receive messages and files from your devices, and monitor your IoT hub operations.
 
 **iothub-explorer** also lets you simulate a device connected to your IoT hub.
@@ -6,6 +7,7 @@ A CLI tool to manage device identities in your IoT hub registry, send and receiv
 [![npm version](https://badge.fury.io/js/iothub-explorer.svg)](https://badge.fury.io/js/iothub-explorer)
 
 <a name="install"/>
+
 ## Installing iothub-explorer
 
 > Note: This tool requires Node.js version 4.x or higher for all features to work.
@@ -76,6 +78,7 @@ $ iothub-explorer help create
 
 ## Examples
 <a name="identityregistry"/>
+
 ### Working with the device identity registry
 
 Supply your IoT hub connection string once using the **login** command. This means you do not need to supply the connection string for subsequent commands for the duration of the session (defaults to one hour):
@@ -121,6 +124,7 @@ $ iothub-explorer delete existing-device
 ```
 
 <a name="devices"/>
+
 ### Working with devices
 
 Use the following command to monitor the device-to-cloud messages from a device:
