@@ -89,7 +89,7 @@ $ iothub-explorer login "HostName=<my-hub>.azure-devices.net;SharedAccessKeyName
 Session started, expires Fri Jan 15 2016 17:00:00 GMT-0800 (Pacific Standard Time)
 ```
 
-> Note: See [Set up IoT Hub](../../doc/setup_iothub.md) for information about how to retrieve your IoT hub connection string.
+> Note: See [Set up IoT Hub](https://github.com/Azure/azure-iot-device-ecosystem/blob/master/setup_iothub.md) for information about how to retrieve your IoT hub connection string.
 
 To retrieve information about an already-registered device from the device identity registry in your IoT hub, including the device connection string, use the following command:
 
