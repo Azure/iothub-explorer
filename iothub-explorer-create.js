@@ -20,6 +20,7 @@ program
   .description('Create a device identity in your IoT Hub device registry, either using the specified device id or JSON description.')
   .usage('[options] [device-id|device-json]')
   .option('-a, --auto', 'create a device with an auto-generated device id')
+  .option('--certificateAuthority', 'create a device that is authenticated with a CA signed cert')
   .option('-cs, --connection-string', '[deprecated] The connection string is now displayed by default')
   .option('-d, --display <property-filter>', 'comma-separated list of device properties that should be displayed')
   .option('-l, --login <connection-string>', 'connection string to use to authenticate with your IoT Hub instance')
@@ -32,8 +33,10 @@ program
   .option('-t2, --thumbprint2 <thumbprint>', 'specify the secondary thumbprint of the x509 certificate')
   .parse(process.argv);
 
-if((program.key1 || program.key2) && (program.x509 || program.thumbprint1 || program.thumbprint2)) {
-  inputError('A device can use either x509 certificates or symmetric keys to authenticate but not both.');
+if (((program.key1 || program.key2) && (program.x509 || program.thumbprint1 || program.thumbprint2)) ||
+    ((program.key1 || program.key2) && (program.certificateAuthority)) ||
+    ((program.x509 || program.thumbprint1 || program.thumbprint2) && (program.certificateAuthority))) {
+  inputError('A device can use only one of: x509 certificates, CA signed certificates, or symmetric keys to authenticate.');
 }
 
 if(program.daysValid && !program.x509) {
@@ -63,6 +66,7 @@ if (program.auto && program.args[0]) {
 if(program.x509) {
   if (program.thumbprint1 || program.thumbprint2) {
     info.authentication = {
+      type: 'selfSigned',
       x509Thumbprint: {
         primaryThumbprint: program.thumbprint1,
         secondaryThumbprint: program.thumbprint2,
@@ -75,10 +79,16 @@ if(program.x509) {
   }
 } else if (program.key1 || program.key2) {
   info.authentication = {
+    type: 'sas',
     symmetricKey: {
       primaryKey: program.key1,
       secondaryKey: program.key2,
     }
+  };
+  createDevice(info);
+} else if (program.certificateAuthority) {
+  info.authentication = {
+    type: 'certificateAuthority'
   };
   createDevice(info);
 } else if (isMissingAuth(info)) {
@@ -138,11 +148,11 @@ function generateCertAndCreateDevice(deviceInfo) {
 }
 
 function isMissingAuth(deviceInfo) {
-  return deviceInfo.authentication ? 
+  return deviceInfo.authentication ?
            deviceInfo.authentication.symmetricKeys ?
              deviceInfo.authentication.symmetricKeys.primaryKey || deviceInfo.authentication.symmetricKeys.secondaryKey
            : deviceInfo.authentication.x509Thumbprints ?
              deviceInfo.authentication.x509Thumbprints.primaryThumbprint || deviceInfo.authentication.x509Thumbprints.secondaryThumbprint
-           : false
+           : deviceInfo.authentication.type === 'certificateAuthority'
          : false;
 }

@@ -24,7 +24,7 @@ function createDeviceConnectionString(deviceInfo, hubHostName) {
     cs += ';SharedAccessKey=' + deviceInfo.authentication.SymmetricKey.primaryKey;
   } else if (deviceInfo.authentication.SymmetricKey.secondaryKey) {
     cs += ';SharedAccessKey=' + deviceInfo.authentication.SymmetricKey.secondaryKey;
-  } else if (deviceInfo.authentication.x509Thumbprint.primaryThumbprint || deviceInfo.authentication.x509Thumbprint.secondaryThumbprint) {
+  } else if (deviceInfo.authentication.x509Thumbprint.primaryThumbprint || deviceInfo.authentication.x509Thumbprint.secondaryThumbprint || (deviceInfo.authentication.type === 'certificateAuthority')) {
     cs += ';x509=true';
   } else {
     cs = null;
@@ -96,7 +96,7 @@ function printSuccess(message) {
 
 /**
  * printDevice will display a device either pretty-printed or as raw JSON.
- * 
+ *
  * @param {any} device                  The device object received from the IoT hub registry.
  * @param {any} hubHostName             used to build the connection string.
  * @param {any} propertyFilter          Filter the properties that should be displayed.
@@ -132,7 +132,7 @@ function printDevice(device, hubHostName, propertyFilter, rawOutput) {
 
   var result = filtered;
   result.connectionString = createDeviceConnectionString(device, hubHostName);
-  
+
 
   var output = rawOutput ? JSON.stringify(result) : prettyjson.render(result);
   console.log(output);
