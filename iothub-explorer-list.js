@@ -7,9 +7,11 @@
 var program = require('commander');
 var serviceError = require('./common.js').serviceError;
 var printDevice = require('./common.js').printDevice;
+var createDeviceJSONObject = require('./common.js').createDeviceJSONObject;
 var getHostFromSas = require('./common.js').getHostFromSas;
 var getSas = require('./common.js').getSas;
 var Registry = require('azure-iothub').Registry;
+var prettyjson = require('prettyjson');
 
 program
   .description('List the device identities currently in your IoT hub device registry')
@@ -26,8 +28,14 @@ registry.list(function (err, devices) {
   if (err) serviceError(err);
   else {
     var host = getHostFromSas(sas);
+    var results = [];
+
     devices.forEach(function (device) {
-      printDevice(device, host, program.display, program.raw);
+      results.push(createDeviceJSONObject(device, host, program.display, program.raw));
     });
+
+    results = program.raw ? JSON.stringify(results) : prettyjson.render(results);
+    
+    console.log(results)
   }
 });
