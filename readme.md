@@ -56,8 +56,8 @@ Each **iothub-explorer** command has its own help that can be viewed by passing 
 ```shell
 $ iothub-explorer help create
 
-  Usage: iothub-explorer-create [options] [device-id|device-json]
-
+  Usage: iothub-explorer create [options] [device-id|device-json]
+  
   Create a device identity in your IoT hub device registry, either using the specified device id or JSON description.
 
   Options:
