@@ -38,6 +38,7 @@ program
   .option('--send-interval <interval-in-milliseconds>', 'interval to use between each message being sent (defaults to 1000ms)', parseInt)
   .option('--send-count <message-count>', 'number of messages to send', parseInt)
   .option('--receive', 'Receive cloud-to-device (C2D) messages as a device')
+  .option('-v, --verbose', 'shows all the information contained in the message received, including annotations and properties')
   .option('--receive-count <message-count>', 'number of C2D messages to receive', parseInt)
   .option('--settle <complete|abandon|reject>', 'indicate how the received C2D messages should be settled (defaults to \'complete\')', verifySettle)
   .option('--upload-file <file-path>', 'upload a file from the simulated device')
@@ -166,6 +167,13 @@ function simulateDevice() {
         printSuccess('==================');
         printSuccess('Message received:');
         console.log(prettyjson.render(msg.data.toString()));
+        
+        if (program.verbose) {
+          console.log('user-id: ' + msg.userId);
+          console.log('message-id: ' + msg.messageId);
+          console.log('correlation-id: ' + msg.correlationId);
+        }
+        
         if (msg.properties.count() > 0) {
           printSuccess('--- properties ---');
           msg.properties.propertyList.forEach(function(prop) {

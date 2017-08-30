@@ -19,6 +19,7 @@ program
   .description('Monitor messages sent by devices to the IoT hub')
   .option('-l, --login <connectionString>', 'use the connection string provided as argument to use to authenticate with your IoT hub')
   .option('-r, --raw', 'use this flag to return raw output instead of pretty-printed output')
+  .option('-v, --verbose', 'shows all the information contained in the event received, including annotations and properties')
   .option('-cg, --consumer-group <consumer-group>', 'Specify the consumer group to use when connecting to Event Hubs partitions')
   .option('-st, --start-time <start-time>', 'Specify the time that should be used as a starting point to read messages in the partitions (number of milliseconds since epoch or ISO-8601 string)')
   .parse(process.argv);
@@ -65,9 +66,29 @@ ehClient.open()
                     }
                   }
 
+                  if (program.verbose) {
+                    if (eventData.annotations) {
+                      if (!raw) {
+                        console.log('---- annotations ----');
+                        console.log(JSON.stringify(eventData.annotations, null, 2));
+                      } else {
+                        console.log(JSON.stringify(eventData.annotations));
+                      }
+                    }
+
+                    if (eventData.properties) {
+                      if (!raw) {
+                        console.log('---- properties ----');
+                        console.log(JSON.stringify(eventData.properties, null, 2));
+                      } else {
+                        console.log(JSON.stringify(eventData.properties));
+                      }
+                    }
+                  }
+
                   if (eventData.applicationProperties) {
                     if (!raw) {
-                      console.log('---- properties ----');
+                      console.log('---- application properties ----');
                       console.log(JSON.stringify(eventData.applicationProperties, null, 2));
                     } else {
                       console.log(JSON.stringify(eventData.applicationProperties));
