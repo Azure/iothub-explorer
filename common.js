@@ -103,14 +103,14 @@ function printSuccess(message) {
  * @param {any} rawOutput               Boolean indicating whether the output should be pretty-printed or displayed as raw JSON.
  */
 function printDevice(device, hubHostName, propertyFilter, rawOutput) {
-  var output = createDeviceJSONObject(device, hubHostName, propertyFilter, rawOutput);
+  var output = createDeviceJSONObject(device, hubHostName, propertyFilter);
 
   output = rawOutput ? JSON.stringify(output) : prettyjson.render(output);
   
   console.log(output);
 }
 
-function createDeviceJSONObject(device, hubHostName, propertyFilter, rawOutput) {
+function createDeviceJSONObject(device, hubHostName, propertyFilter) {
   var filtered = {};
   
   if (propertyFilter) {

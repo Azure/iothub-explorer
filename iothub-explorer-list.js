@@ -6,7 +6,6 @@
 
 var program = require('commander');
 var serviceError = require('./common.js').serviceError;
-var printDevice = require('./common.js').printDevice;
 var createDeviceJSONObject = require('./common.js').createDeviceJSONObject;
 var getHostFromSas = require('./common.js').getHostFromSas;
 var getSas = require('./common.js').getSas;
@@ -36,6 +35,6 @@ registry.list(function (err, devices) {
 
     results = program.raw ? JSON.stringify(results) : prettyjson.render(results);
     
-    console.log(results)
+    console.log(results);
   }
 });
