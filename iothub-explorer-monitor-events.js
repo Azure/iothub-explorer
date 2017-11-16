@@ -57,7 +57,7 @@ ehClient.open()
                   if (eventData.body instanceof Buffer) {
                     console.log(eventData.body.toString());
                   } else if (typeof eventData.body === 'string') {
-                    console.log(eventData instanceof Buffer ? eventData.body.toString() : JSON);
+                    console.log(JSON.stringify(eventData.body));
                   } else {
                     if (!raw) {
                       console.log(JSON.stringify(eventData.body, null, 2));
