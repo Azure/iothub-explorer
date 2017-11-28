@@ -28,7 +28,7 @@ program
   .option('-k2, --key2 <key>', 'specify the secondary key for newly created device')
   .option('-r, --raw', 'use this flag to return raw JSON instead of pretty-printed output')
   .option('-x, --x509', 'generate an x509 certificate to authenticate the device')
-  .option('-dv, --daysValid', 'number of days the x509 certificate should be valid for')
+  .option('-dv, --daysValid', 'number of days the x509 certificate should be valid for', parseInt)
   .option('-t1, --thumbprint1 <thumbprint>', 'specify the primary thumbprint of the x509 certificate')
   .option('-t2, --thumbprint2 <thumbprint>', 'specify the secondary thumbprint of the x509 certificate')
   .parse(process.argv);

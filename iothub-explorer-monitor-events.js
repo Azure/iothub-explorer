@@ -38,7 +38,9 @@ if(!program.raw) {
 }
 
 var consumerGroup = program.consumerGroup || '$Default';
-var startTime = program.startTime ? new Date(program.startTime) : Date.now();
+var startTime = program.startTime ?
+  isNaN(program.startTime) ? new Date(program.startTime) : new Date(parseInt(program.startTime)) :
+  Date.now();
 
 var ehClient = EventHubsClient.fromConnectionString(connectionString);
 ehClient.open()

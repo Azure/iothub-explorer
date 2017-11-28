@@ -21,14 +21,14 @@ var Registry = require('azure-iothub').Registry;
 program
   .description('Generate a shared access signature token for the given device with an expiry time <num-seconds> from now')
   .option('-l, --login <connectionString>', 'use the connection string provided as argument to use to authenticate with your IoT hub')
-  .option('-d, --duration <durationInSeconds>', 'expiration time (in seconds): if not specified, the default is one hour')
+  .option('-d, --duration <durationInSeconds>', 'expiration time (in seconds): if not specified, the default is one hour', parseInt)
   .parse(process.argv);
 
 if(!program.args[0]) inputError('You must specify a device id.');
 
 var deviceId = program.args[0];
 var nowInSeconds = Math.floor(Date.now() / 1000);
-var expiry = program.duration ? nowInSeconds + parseInt(program.duration) : nowInSeconds + 3600;
+var expiry = program.duration ? nowInSeconds + program.duration : nowInSeconds + 3600;
 
 if (isNaN(new Date(expiry * 1000))) {
   inputError('Invalid duration');

@@ -22,7 +22,7 @@ var SharedAccessSignature = require('azure-iothub').SharedAccessSignature;
 
 program
   .description('Create a temporary session on your IoT hub')
-  .option('-d, --duration <duration-in-seconds>', 'time to keep the session open for (in seconds): if not specified, the default is one hour')
+  .option('-d, --duration <duration-in-seconds>', 'time to keep the session open for (in seconds): if not specified, the default is one hour', parseInt)
   .parse(process.argv);
 
 if(!program.args[0]) inputError('You must specify a connection string.');
