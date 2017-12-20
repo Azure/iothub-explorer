@@ -21,16 +21,16 @@ program
   .usage('[options] [device-id|device-json]')
   .option('-a, --auto', 'create a device with an auto-generated device id')
   .option('--certificateAuthority', 'create a device that is authenticated with a CA signed cert')
-  .option('-cs, --connection-string', '[deprecated] The connection string is now displayed by default')
+  .option('-c, --connection-string', '[deprecated] The connection string is now displayed by default')
   .option('-d, --display <property-filter>', 'comma-separated list of device properties that should be displayed')
   .option('-l, --login <connection-string>', 'connection string to use to authenticate with your IoT Hub instance')
-  .option('-k1, --key1 <key>', 'specify the primary key for newly created device')
-  .option('-k2, --key2 <key>', 'specify the secondary key for newly created device')
+  .option('--key1 <key>', 'specify the primary key for newly created device')
+  .option('--key2 <key>', 'specify the secondary key for newly created device')
   .option('-r, --raw', 'use this flag to return raw JSON instead of pretty-printed output')
   .option('-x, --x509', 'generate an x509 certificate to authenticate the device')
-  .option('-dv, --daysValid', 'number of days the x509 certificate should be valid for', parseInt)
-  .option('-t1, --thumbprint1 <thumbprint>', 'specify the primary thumbprint of the x509 certificate')
-  .option('-t2, --thumbprint2 <thumbprint>', 'specify the secondary thumbprint of the x509 certificate')
+  .option('--daysValid', 'number of days the x509 certificate should be valid for', parseInt)
+  .option('--thumbprint1 <thumbprint>', 'specify the primary thumbprint of the x509 certificate')
+  .option('--thumbprint2 <thumbprint>', 'specify the secondary thumbprint of the x509 certificate')
   .parse(process.argv);
 
 if (((program.key1 || program.key2) && (program.x509 || program.thumbprint1 || program.thumbprint2)) ||

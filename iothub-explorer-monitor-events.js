@@ -22,8 +22,8 @@ program
   .option('-l, --login <connectionString>', 'use the connection string provided as argument to use to authenticate with your IoT hub')
   .option('-r, --raw', 'use this flag to return raw output instead of pretty-printed output')
   .option('-v, --verbose', 'shows all the information contained in the event received, including annotations and properties')
-  .option('-cg, --consumer-group <consumer-group>', 'Specify the consumer group to use when connecting to Event Hubs partitions')
-  .option('-st, --start-time <start-time>', 'Specify the time that should be used as a starting point to read messages in the partitions (number of milliseconds since epoch or ISO-8601 string)')
+  .option('-c, --consumer-group <consumer-group>', 'Specify the consumer group to use when connecting to Event Hubs partitions')
+  .option('-s, --start-time <start-time>', 'Specify the time that should be used as a starting point to read messages in the partitions (number of milliseconds since epoch or ISO-8601 string)')
   .parse(process.argv);
 
 if (!program.login) inputError('You must provide a connection string using the --login argument.');
