@@ -9,6 +9,7 @@ var Registry = require('azure-iothub').Registry;
 // external dependencies
 var program = require('commander');
 var colorsTmpl = require('colors-tmpl');
+var Promise = require('bluebird');
 
 // local dependencies
 var inputError = require('./common.js').inputError;
@@ -48,64 +49,70 @@ var monitorEvents = function () {
 
   var ehClient = EventHubsClient.fromConnectionString(connectionString);
   ehClient.open()
-    .then(ehClient.getPartitionIds.bind(ehClient))
-    .then(function (partitionIds) {
-      return partitionIds.map(function (partitionId) {
-        return ehClient.createReceiver(consumerGroup, partitionId, { 'startAfterTime': startTime }).then(function (receiver) {
-          receiver.on('errorReceived', function (error) {
-            serviceError(error.message);
-          });
-          receiver.on('message', function (eventData) {
-            var from = eventData.annotations['iothub-connection-device-id'];
-            var raw = program.raw;
-            if (!deviceId || (deviceId && from === deviceId)) {
-              if (!raw) console.log('==== From: ' + from + ' ====');
-              if (eventData.body instanceof Buffer) {
-                console.log(eventData.body.toString());
-              } else if (typeof eventData.body === 'string') {
-                console.log(JSON.stringify(eventData.body));
-              } else {
-                if (!raw) {
-                  console.log(JSON.stringify(eventData.body, null, 2));
-                } else {
-                  console.log(JSON.stringify(eventData.body));
-                }
-              }
+    .then(function () {
+      return Promise.any([
+        program.duration ? Promise.delay(program.duration * 1000).then(function () { ehClient.close(); }) : Promise.race([]),
+        ehClient.getPartitionIds()
+          .then(function (partitionIds) {
+            return partitionIds.map(function (partitionId) {
+              return ehClient.createReceiver(consumerGroup, partitionId, { 'startAfterTime': startTime })
+                .then(function (receiver) {
+                  receiver.on('errorReceived', function (error) {
+                    serviceError(error.message);
+                  });
+                  receiver.on('message', function (eventData) {
+                    var from = eventData.annotations['iothub-connection-device-id'];
+                    var raw = program.raw;
+                    if (!deviceId || (deviceId && from === deviceId)) {
+                      if (!raw) console.log('==== From: ' + from + ' ====');
+                      if (eventData.body instanceof Buffer) {
+                        console.log(eventData.body.toString());
+                      } else if (typeof eventData.body === 'string') {
+                        console.log(JSON.stringify(eventData.body));
+                      } else {
+                        if (!raw) {
+                          console.log(JSON.stringify(eventData.body, null, 2));
+                        } else {
+                          console.log(JSON.stringify(eventData.body));
+                        }
+                      }
 
-              if (program.verbose) {
-                if (eventData.annotations) {
-                  if (!raw) {
-                    console.log('---- annotations ----');
-                    console.log(JSON.stringify(eventData.annotations, null, 2));
-                  } else {
-                    console.log(JSON.stringify(eventData.annotations));
-                  }
-                }
+                      if (program.verbose) {
+                        if (eventData.annotations) {
+                          if (!raw) {
+                            console.log('---- annotations ----');
+                            console.log(JSON.stringify(eventData.annotations, null, 2));
+                          } else {
+                            console.log(JSON.stringify(eventData.annotations));
+                          }
+                        }
 
-                if (eventData.properties) {
-                  if (!raw) {
-                    console.log('---- properties ----');
-                    console.log(JSON.stringify(eventData.properties, null, 2));
-                  } else {
-                    console.log(JSON.stringify(eventData.properties));
-                  }
-                }
-              }
+                        if (eventData.properties) {
+                          if (!raw) {
+                            console.log('---- properties ----');
+                            console.log(JSON.stringify(eventData.properties, null, 2));
+                          } else {
+                            console.log(JSON.stringify(eventData.properties));
+                          }
+                        }
+                      }
 
-              if (eventData.applicationProperties) {
-                if (!raw) {
-                  console.log('---- application properties ----');
-                  console.log(JSON.stringify(eventData.applicationProperties, null, 2));
-                } else {
-                  console.log(JSON.stringify(eventData.applicationProperties));
-                }
-              }
+                      if (eventData.applicationProperties) {
+                        if (!raw) {
+                          console.log('---- application properties ----');
+                          console.log(JSON.stringify(eventData.applicationProperties, null, 2));
+                        } else {
+                          console.log(JSON.stringify(eventData.applicationProperties));
+                        }
+                      }
 
-              if (!raw) console.log('====================');
-            }
-          });
-        });
-      });
+                      if (!raw) console.log('====================');
+                    }
+                  });
+                });
+            });
+          })
+      ])
     })
     .catch(function (error) {
       serviceError(error.message);
