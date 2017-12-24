@@ -40,7 +40,7 @@ program
   .option('-v, --verbose', 'Show more information from the received event, including annotations and properties')
   .option('-c, --consumer-group <consumer-group>', 'Use the provided consumer group when connecting to Event Hubs')
   .option('-s, --start-time <start-time>', 'Read messages that arrived on or after the given time (milliseconds since epoch or ISO-8601 string)')
-  .option('-d, --duration <duration>', 'Exit aften the given number of seconds (runs indefinitely if not specified)', coerceAndValidateDuration)
+  .option('-d, --duration <duration>', 'Exit after the given number of seconds (runs indefinitely if not specified)', coerceAndValidateDuration)
   .parse(process.argv);
 
 if (!program.login) inputError('You must provide a connection string using the --login argument.');
