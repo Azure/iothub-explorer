@@ -18,6 +18,21 @@ var serviceError = require('./common.js').serviceError;
 // Azure Event Hubs dependencies
 var EventHubsClient = require('azure-event-hubs').Client;
 
+function coerceAndValidateDuration(value) {
+  var d = parseInt(value);
+  if (isNaN(d)) {
+    inputError('The value specified for --duration must be a number.');
+  }
+  else if (d < 0) {
+    inputError('The value specified for --duration must be a positive number.');
+  }
+  else if (d * 1000 > Number.MAX_SAFE_INTEGER) {
+    inputError('The value specified for --duration is too big. It must be no greater than Number.MAX_SAFE_INT / 1000.');
+  }
+
+  return d * 1000;
+}
+
 program
   .description('Monitor messages sent by devices to the IoT hub')
   .option('-l, --login <connectionString>', 'Use the provided connection string to authenticate with IoT Hub')
@@ -25,7 +40,7 @@ program
   .option('-v, --verbose', 'Show more information from the received event, including annotations and properties')
   .option('-c, --consumer-group <consumer-group>', 'Use the provided consumer group when connecting to Event Hubs')
   .option('-s, --start-time <start-time>', 'Read messages that arrived on or after the given time (milliseconds since epoch or ISO-8601 string)')
-  .option('-d, --duration <duration>', 'Exit aften the given number of seconds (runs indefinitely if not specified)')
+  .option('-d, --duration <duration>', 'Exit aften the given number of seconds (runs indefinitely if not specified)', coerceAndValidateDuration)
   .parse(process.argv);
 
 if (!program.login) inputError('You must provide a connection string using the --login argument.');
@@ -51,7 +66,7 @@ var monitorEvents = function () {
   ehClient.open()
     .then(function () {
       return Promise.any([
-        program.duration ? Promise.delay(program.duration * 1000).then(function () { ehClient.close(); }) : Promise.race([]),
+        program.duration ? Promise.delay(program.duration).then(ehClient.close.bind(ehClient)) : Promise.race([]),
         ehClient.getPartitionIds()
           .then(function (partitionIds) {
             return partitionIds.map(function (partitionId) {
