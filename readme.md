@@ -130,7 +130,7 @@ $ iothub-explorer delete existing-device
 Use the following command to monitor the device-to-cloud messages from a device:
 
 ```shell
-$ iothub-explorer monitor-events myFirstDevice --login 'HostName=<my-hub>.azure-devices.net;SharedAccessKeyName=<my-policy>;SharedAccessKey=<my-policy-key>'
+$ iothub-explorer monitor-events myFirstDevice --login "HostName=<my-hub>.azure-devices.net;SharedAccessKeyName=<my-policy>;SharedAccessKey=<my-policy-key>"
 
 Monitoring events from device myFirstDevice
 Listening on endpoint iothub-ehub-<my-endpoint>/ConsumerGroups/$Default/Partitions/0 start time: 1453821103646
