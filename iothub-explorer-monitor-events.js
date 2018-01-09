@@ -127,7 +127,7 @@ var monitorEvents = function () {
                 });
             });
           })
-      ])
+      ]);
     })
     .catch(function (error) {
       serviceError(error.message);
