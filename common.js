@@ -73,6 +73,10 @@ function inputError(message) {
   printErrorAndExit(message, 'Input Error:');
 }
 
+function printErrorWithHintAndExit(message, hint, prefix) {
+  printErrorAndExit(message + '\n\n{bold}{yellow}Hint:{/yellow}{/bold} ' + hint, prefix);
+}
+
 function printErrorAndExit(message, prefix) {
   if (!prefix) {
     prefix = 'Error:';
@@ -217,6 +221,7 @@ module.exports = {
   inputError: inputError,
   serviceError: serviceError,
   printSuccess: printSuccess,
+  printErrorWithHintAndExit: printErrorWithHintAndExit,
   printErrorAndExit: printErrorAndExit,
   printDevice: printDevice,
   createDeviceJSONObject: createDeviceJSONObject,

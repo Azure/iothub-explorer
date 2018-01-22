@@ -14,6 +14,8 @@ var Promise = require('bluebird');
 // local dependencies
 var inputError = require('./common.js').inputError;
 var serviceError = require('./common.js').serviceError;
+var printErrorWithHintAndExit = require('./common.js').printErrorWithHintAndExit;
+var errorHints = require('./error-hints.js');
 
 // Azure Event Hubs dependencies
 var EventHubsClient = require('azure-event-hubs').Client;
@@ -73,6 +75,9 @@ var monitorEvents = function () {
               return ehClient.createReceiver(consumerGroup, partitionId, { 'startAfterTime': startTime })
                 .then(function (receiver) {
                   receiver.on('errorReceived', function (error) {
+                    if (error.transport && error.transport.condition.indexOf('amqp:link:stolen') >= 0) {
+                      printErrorWithHintAndExit(error.message, errorHints.amqpLinkStolen);
+                    }
                     serviceError(error.message);
                   });
                   receiver.on('message', function (eventData) {
