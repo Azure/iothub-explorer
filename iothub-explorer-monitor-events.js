@@ -84,7 +84,7 @@ var monitorEvents = function () {
                     var from = eventData.annotations['iothub-connection-device-id'];
                     var raw = program.raw;
                     if (!deviceId || (deviceId && from === deviceId)) {
-                      if (!raw) console.log('==== From: ' + from + ' ====');
+                      if (!raw) console.log('==== From: \'' + from + '\' at \''+(new Date()).toISOString()+'\' ====');
                       if (eventData.body instanceof Buffer) {
                         console.log(eventData.body.toString());
                       } else if (typeof eventData.body === 'string') {
