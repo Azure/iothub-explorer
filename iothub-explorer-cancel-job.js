@@ -5,7 +5,6 @@
 'use strict';
 
 var program = require('commander');
-var prettyjson = require('prettyjson');
 var serviceError = require('./common.js').serviceError;
 var getSas = require('./common.js').getSas;
 var JobClient = require('azure-iothub').JobClient;
