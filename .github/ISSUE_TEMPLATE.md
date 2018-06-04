@@ -1,23 +1,6 @@
 <!--
-Hi there! thank you for discovering and submitting an issue!
+Hi there!
+iothub-explorer will be retired on November 31st, 2018 and has been replaced by the [Azure CLI IoT Extension](https://aka.ms/iotcli).
 
-Please first tell us a little bit about the environment you're running:
-The commands in the comments can be run directly in a command prompt.
+We will not address any issues regarding iothub-explorer except for those related to migrating towards the Azure CLI.
 -->
-
-# Context
-- **OS and version used:** <VERSION> <!-- Windows 10, Ubuntu 15.04... -->
-- **Node.js version:** <VERSION> <!-- in a command prompt: node --version -->
-- **npm version:** <VERSION> <!-- in a command prompt: npm --version -->
-- **list of installed packages:** <VERSION> <!-- in a command prompt, from the directory containing your code: npm list -->
-- **cloned repo:** <VERSION> <!-- **If** you are using a cloned repository, in a command prompt: git describe -->
-
-# Description of the issue:
-<!-- please be as detailed as possible: which feature has a problem, how often does it fail,  -->
-
-# Console log of the issue:
-<!-- Consider setting the DEBUG environment variable to '*'. This will produce a much more verbose output that will help debugging -->
-<!-- Don't forget to remove any connection string information! -->
-
-# Code sample exhibiting the issue:
-<!-- Please remove any connection string information! -->

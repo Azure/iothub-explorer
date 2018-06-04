@@ -6,7 +6,7 @@
 
 // external dependencies
 var program = require('commander');
-var colorsTmpl = require('colors-tmpl');
+var chalk = require('chalk');
 
 // local dependencies
 var inputError = require('./common.js').inputError;
@@ -16,6 +16,9 @@ var createMessageFromArgument = require('./common.js').createMessageFromArgument
 
 // Azure Event Hubs dependencies
 var ServiceClient = require('azure-iothub').Client;
+var showDeprecationText = require('./common.js').showDeprecationText;
+
+showDeprecationText('az iot device c2d-message send');
 
 program
   .description('Send a message to device (cloud-to-device/C2D).')
@@ -43,9 +46,9 @@ client.open(function (err) {
       if(program.raw) {
         console.log(message.messageId);
       } else {
-        var successMessage = '{green}Message sent with id: {/green}' + message.messageId;
-        if (program.ack) successMessage += '. {grey}Acknowledgement requested: ' + program.ack + '{/grey}';
-        console.log(colorsTmpl(successMessage));
+        var successMessage = chalk.green('Message sent with id: ') + message.messageId;
+        if (program.ack) successMessage += chalk.grey('. Acknowledgement requested: ' + program.ack);
+        console.log(successMessage);
       }
       client.close(function(err) {
         if(err) serviceError(err);

@@ -19,6 +19,9 @@ var configLoc = require('./common.js').configLoc;
 // Azure IoT SDK dependencies
 var ConnectionString = require('azure-iothub').ConnectionString;
 var SharedAccessSignature = require('azure-iothub').SharedAccessSignature;
+var showDeprecationText = require('./common.js').showDeprecationText;
+
+showDeprecationText('az login');
 
 program
   .description('Create a temporary session on your IoT hub')

@@ -10,6 +10,9 @@ var inputError = require('./common.js').inputError;
 var serviceError = require('./common.js').serviceError;
 var getSas = require('./common.js').getSas;
 var Registry = require('azure-iothub').Registry;
+var showDeprecationText = require('./common.js').showDeprecationText;
+
+showDeprecationText('az iot hub device-twin update');
 
 program
   .description('Update the twin of a device with the JSON description provided on the command line')
@@ -17,6 +20,7 @@ program
   .option('-l, --login <connection-string>', 'use the connection string provided as argument to use to authenticate with your IoT Hub instance')
   .option('-r, --raw', 'use this flag to return raw output instead of pretty-printed output')
   .parse(process.argv);
+
 
 if(!program.args[0]) inputError('You must specify a deviceId.');
 if(!program.args[1]) inputError('You must specify the JSON to update the twin with.');

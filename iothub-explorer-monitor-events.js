@@ -4,12 +4,12 @@
 
 'use strict';
 
+var Promise = require('bluebird');
 var Registry = require('azure-iothub').Registry;
 
 // external dependencies
 var program = require('commander');
-var colorsTmpl = require('colors-tmpl');
-var Promise = require('bluebird');
+var chalk = require('chalk');
 
 // local dependencies
 var inputError = require('./common.js').inputError;
@@ -19,6 +19,9 @@ var errorHints = require('./error-hints.js');
 
 // Azure Event Hubs dependencies
 var EventHubsClient = require('azure-event-hubs').Client;
+var showDeprecationText = require('./common.js').showDeprecationText;
+
+showDeprecationText('az iot hub monitor-events');
 
 function coerceAndValidateDuration(value) {
   var d = parseInt(value);
@@ -53,9 +56,9 @@ var connectionString = program.login;
 var monitorEvents = function () {
   if (!program.raw) {
     if (deviceId) {
-      console.log(colorsTmpl('\n{grey}Monitoring events from device {green}' + deviceId + '{/green}...{/grey}'));
+      console.log(chalk.grey('Monitoring events from device ' + chalk.green(deviceId) + chalk.gray('...')));
     } else {
-      console.log(colorsTmpl('\n{grey}Monitoring events from all devices...{/grey}'));
+      console.log(chalk.grey('Monitoring events from all devices...'));
     }
   }
 

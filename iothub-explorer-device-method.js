@@ -10,6 +10,9 @@ var inputError = require('./common.js').inputError;
 var serviceError = require('./common.js').serviceError;
 var getSas = require('./common.js').getSas;
 var Client = require('azure-iothub').Client;
+var showDeprecationText = require('./common.js').showDeprecationText;
+
+showDeprecationText('az iot hub invoke-device-method');
 
 program
   .description('Call a device method on a specific device')

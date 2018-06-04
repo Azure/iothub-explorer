@@ -11,6 +11,9 @@ var serviceError = require('./common.js').serviceError;
 var printSuccess = require('./common.js').printSuccess;
 var getSas = require('./common.js').getSas;
 var Registry = require('azure-iothub').Registry;
+var showDeprecationText = require('./common.js').showDeprecationText;
+
+showDeprecationText('az iot hub device-identity export');
 
 program
   .description('Export devices in bulk from the device identity registry. The list of devices gets exported to a blob and then downloaded to a local file.')

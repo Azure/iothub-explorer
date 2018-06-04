@@ -15,6 +15,9 @@ var program = require('commander');
 var printErrorAndExit = require('./common.js').printErrorAndExit;
 var printSuccess = require('./common.js').printSuccess;
 var configLoc = require('./common.js').configLoc;
+var showDeprecationText = require('./common.js').showDeprecationText;
+
+showDeprecationText('az logout');
 
 program
   .description('Terminate a temporary session on your IoT hub')

@@ -6,7 +6,7 @@
 
 // external dependencies
 var program = require('commander');
-var colorsTmpl = require('colors-tmpl');
+var chalk = require('chalk');
 var prettyjson = require('prettyjson');
 
 // local dependencies
@@ -16,6 +16,9 @@ var getSas = require('./common.js').getSas;
 
 // Azure Event Hubs dependencies
 var ServiceClient = require('azure-iothub').Client;
+var showDeprecationText = require('./common.js').showDeprecationText;
+
+showDeprecationText('az iot hub monitor-feedback');
 
 program
   .description('Monitor feedback messages sent by devices when they receive a cloud-to-device (c2d) message.')
@@ -32,7 +35,7 @@ client.open(function (err) {
     client.getFeedbackReceiver(function (err, receiver) {
       if (err) serviceError(err);
       if (!program.raw) {
-        console.log(colorsTmpl('\n{yellow}Waiting for feedback...{/yellow} (Ctrl-C to quit)'));
+        console.log(chalk.yellow('Waiting for feedback...') + ' (Ctrl-C to quit)');
       }
 
       receiver.on('errorReceived', function (err) { serviceError(err); });

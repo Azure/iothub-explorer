@@ -1,3 +1,9 @@
+# deprecation notice
+
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
+
+*`iothub-explorer` will be retired on November 31st, 2018 and has been replaced by the [Azure CLI IoT Extension](https://aka.ms/iotcli).*
+
 # iothub-explorer
 
 A CLI tool to manage device identities in your IoT hub registry, send and receive messages and files from your devices, and monitor your IoT hub operations.
@@ -57,7 +63,7 @@ Each **iothub-explorer** command has its own help that can be viewed by passing 
 $ iothub-explorer help create
 
   Usage: iothub-explorer create [options] [device-id|device-json]
-  
+
   Create a device identity in your IoT hub device registry, either using the specified device id or JSON description.
 
   Options:
@@ -135,16 +141,16 @@ $ iothub-explorer monitor-events myFirstDevice --login "HostName=<my-hub>.azure-
 Monitoring events from device myFirstDevice
 Listening on endpoint iothub-ehub-<my-endpoint>/ConsumerGroups/$Default/Partitions/0 start time: 1453821103646
 Listening on endpoint iothub-ehub-<my-endpoint>/ConsumerGroups/$Default/Partitions/1 start time: 1453821103646
-Event received: 
+Event received:
 { deviceId: 'myFirstDevice', windSpeed: 10.92403794825077 }
 
-Event received: 
+Event received:
 { deviceId: 'myFirstDevice', windSpeed: 10.671534826979041 }
 
-Event received: 
+Event received:
 { deviceId: 'myFirstDevice', windSpeed: 13.557703581638634 }
 
-Event received: 
+Event received:
 { deviceId: 'myFirstDevice', windSpeed: 11.123057782649994 }
 ```
 

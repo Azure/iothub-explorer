@@ -10,6 +10,9 @@ var serviceError = require('./common.js').serviceError;
 var printSuccess = require('./common.js').printSuccess;
 var getSas = require('./common.js').getSas;
 var Registry = require('azure-iothub').Registry;
+var showDeprecationText = require('./common.js').showDeprecationText;
+
+showDeprecationText('az iot hub device-identity delete');
 
 program
   .description('Delete a device identity from your IoT hub device registry')

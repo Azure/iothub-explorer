@@ -6,7 +6,7 @@
 
 // external dependencies
 var program = require('commander');
-var colorsTmpl = require('colors-tmpl');
+var chalk = require('chalk');
 var prettyjson = require('prettyjson');
 
 // local dependencies
@@ -16,6 +16,9 @@ var getSas = require('./common.js').getSas;
 
 // Azure Event Hubs dependencies
 var ServiceClient = require('azure-iothub').Client;
+var showDeprecationText = require('./common.js').showDeprecationText;
+
+showDeprecationText('There is no equivalent command in the Azure CLI - if this feature is important to you please open an issue on the Azure CLI IoT Extension repository (https://aka.ms/iotcli)');
 
 program
   .description('Monitor file upload notifications emitted by devices')
@@ -32,7 +35,7 @@ client.open(function (err) {
     client.getFileNotificationReceiver(function (err, receiver) {
       if (err) serviceError(err);
       if (!program.raw) {
-        console.log(colorsTmpl('\n{yellow}Waiting for file notifications...{/yellow} (Ctrl-C to quit)'));
+        console.log(chalk.yellow('Waiting for file notifications...') + ' (Ctrl-C to quit)');
       }
 
       receiver.on('errorReceived', function (err) { serviceError(err); });

@@ -17,6 +17,9 @@ var getSas = require('./common.js').getSas;
 // Azure IoT SDK dependencies
 var deviceSas = require('azure-iot-device').SharedAccessSignature;
 var Registry = require('azure-iothub').Registry;
+var showDeprecationText = require('./common.js').showDeprecationText;
+
+showDeprecationText('az iot hub generate-sas-token');
 
 program
   .description('Generate a shared access signature token for the given device with an expiry time <num-seconds> from now')

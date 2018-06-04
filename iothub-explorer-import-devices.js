@@ -11,6 +11,9 @@ var serviceError = require('./common.js').serviceError;
 var printSuccess = require('./common.js').printSuccess;
 var getSas = require('./common.js').getSas;
 var Registry = require('azure-iothub').Registry;
+var showDeprecationText = require('./common.js').showDeprecationText;
+
+showDeprecationText('az iot hub device-identity import');
 
 program
   .description('Import devices in bulk into the device identity registry. The input file gets uploaded to a blob and then an import job is started from that blob.')

@@ -11,6 +11,9 @@ var printDevice = require('./common.js').printDevice;
 var getHostFromSas = require('./common.js').getHostFromSas;
 var getSas = require('./common.js').getSas;
 var Registry = require('azure-iothub').Registry;
+var showDeprecationText = require('./common.js').showDeprecationText;
+
+showDeprecationText('az iot hub device-identity show');
 
 program
   .description('Get a device identity from your IoT hub device registry')

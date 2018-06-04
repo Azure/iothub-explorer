@@ -11,6 +11,9 @@ var getHostFromSas = require('./common.js').getHostFromSas;
 var getSas = require('./common.js').getSas;
 var Registry = require('azure-iothub').Registry;
 var prettyjson = require('prettyjson');
+var showDeprecationText = require('./common.js').showDeprecationText;
+
+showDeprecationText('az iot hub device-identity list');
 
 program
   .description('List the device identities currently in your IoT hub device registry')
@@ -34,7 +37,7 @@ registry.list(function (err, devices) {
     });
 
     results = program.raw ? JSON.stringify(results) : prettyjson.render(results);
-    
+
     console.log(results);
   }
 });

@@ -9,6 +9,9 @@ var prettyjson = require('prettyjson');
 var serviceError = require('./common.js').serviceError;
 var getSas = require('./common.js').getSas;
 var JobClient = require('azure-iothub').JobClient;
+var showDeprecationText = require('./common.js').showDeprecationText;
+
+showDeprecationText('az iot hub job list');
 
 program
   .description('Query existing jobs')

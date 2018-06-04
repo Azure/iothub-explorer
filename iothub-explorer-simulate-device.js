@@ -27,6 +27,10 @@ var getSas = require('./common.js').getSas;
 var getHostFromSas = require('./common.js').getHostFromSas;
 var createDeviceConnectionString = require('./common.js').createDeviceConnectionString;
 var createMessageFromArgument = require('./common.js').createMessageFromArgument;
+var showDeprecationText = require('./common.js').showDeprecationText;
+
+showDeprecationText('az iot device simulate');
+
 
 program
   .version(packageJson.version)
@@ -167,13 +171,13 @@ function simulateDevice() {
         printSuccess('==================');
         printSuccess('Message received:');
         console.log(prettyjson.render(msg.data.toString()));
-        
+
         if (program.verbose) {
           console.log('user-id: ' + msg.userId);
           console.log('message-id: ' + msg.messageId);
           console.log('correlation-id: ' + msg.correlationId);
         }
-        
+
         if (msg.properties.count() > 0) {
           printSuccess('--- properties ---');
           msg.properties.propertyList.forEach(function(prop) {

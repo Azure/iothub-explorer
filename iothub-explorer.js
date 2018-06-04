@@ -6,6 +6,12 @@
 
 var program = require('commander');
 var packageJson = require('./package.json');
+var chalk = require('chalk');
+
+console.log('--------');
+console.log(chalk.red(chalk.bold("DEPRECATION NOTICE: iothub-explorer will be retired on November 31st, 2018")));
+console.log(chalk.bold("It has been replaced by the Azure CLI IoT Extension (https://aka.ms/iotcli)."));
+console.log('--------');
 
 program
   .version(packageJson.version)
@@ -30,4 +36,5 @@ program
   .command('query-twin <sql-query>', 'get twin data matching the sql-query argument')
   .command('query-job [job-type] [job-status]', 'get scheduled job data matching the sql-query argument')
   .command('device-method <device-id> <method-name> [method-payload] [timeout-in-seconds]', 'executes a device method on the specified device')
+  .command('cancel-job <job-id>', 'cancels the job with the specified jobId')
   .parse(process.argv);

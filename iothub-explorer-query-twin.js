@@ -10,6 +10,9 @@ var inputError = require('./common.js').inputError;
 var serviceError = require('./common.js').serviceError;
 var getSas = require('./common.js').getSas;
 var Registry = require('azure-iothub').Registry;
+var showDeprecationText = require('./common.js').showDeprecationText;
+
+showDeprecationText('az iot hub query');
 
 program
   .description('Query the registry for twins matching the SQL query passed as argument')

@@ -7,7 +7,7 @@
 var fs = require('fs');
 
 // external dependencies
-var colorsTmpl = require('colors-tmpl');
+var chalk = require('chalk');
 var prettyjson = require('prettyjson');
 var uuid = require('uuid');
 var _ = require('lodash');
@@ -74,7 +74,7 @@ function inputError(message) {
 }
 
 function printErrorWithHintAndExit(message, hint, prefix) {
-  printErrorAndExit(message + '\n\n{bold}{yellow}Hint:{/yellow}{/bold} ' + hint, prefix);
+  printErrorAndExit(message + chalk.yellow.bold('Hint: ') + hint, prefix);
 }
 
 function printErrorAndExit(message, prefix) {
@@ -82,7 +82,7 @@ function printErrorAndExit(message, prefix) {
     prefix = 'Error:';
   }
 
-  console.error(colorsTmpl('\n{bold}{red}' + prefix + '{/red}{/bold} ' + message));
+  console.error(chalk.red.bold(prefix) + ' ' + message);
   process.exit(1);
 }
 
@@ -95,7 +95,7 @@ function serviceError(err) {
 }
 
 function printSuccess(message) {
-  console.log(colorsTmpl('{green}' + message + '{/green}'));
+  console.log(chalk.green(message));
 }
 
 /**
@@ -110,13 +110,13 @@ function printDevice(device, hubHostName, propertyFilter, rawOutput) {
   var output = createDeviceJSONObject(device, hubHostName, propertyFilter);
 
   output = rawOutput ? JSON.stringify(output) : prettyjson.render(output);
-  
+
   console.log(output);
 }
 
 function createDeviceJSONObject(device, hubHostName, propertyFilter) {
   var filtered = {};
-  
+
   if (propertyFilter) {
     var props = propertyFilter.split(',');
     props.forEach(function (prop) {
@@ -217,6 +217,11 @@ function getHostFromSas(sas) {
   return SharedAccessSignature.parse(sas).sr;
 }
 
+function showDeprecationText(newCommand) {
+  console.log(chalk.bold(chalk.red("The equivalent command in the Azure CLI is: ") + chalk.green(newCommand)));
+  console.log('--------');
+}
+
 module.exports = {
   inputError: inputError,
   serviceError: serviceError,
@@ -229,5 +234,6 @@ module.exports = {
   getSas: getSas,
   configLoc: configLoc,
   createMessageFromArgument: createMessageFromArgument,
-  createDeviceConnectionString: createDeviceConnectionString
+  createDeviceConnectionString: createDeviceConnectionString,
+  showDeprecationText: showDeprecationText
 };

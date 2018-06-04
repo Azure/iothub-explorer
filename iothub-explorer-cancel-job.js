@@ -8,6 +8,9 @@ var program = require('commander');
 var serviceError = require('./common.js').serviceError;
 var getSas = require('./common.js').getSas;
 var JobClient = require('azure-iothub').JobClient;
+var showDeprecationText = require('./common.js').showDeprecationText;
+
+showDeprecationText('az iot hub job cancel');
 
 program
   .description('Cancel existing job')

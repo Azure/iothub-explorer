@@ -14,6 +14,9 @@ var serviceError = require('./common.js').serviceError;
 
 // Azure Event Hubs dependencies
 var EventHubsClient = require('azure-event-hubs').Client;
+var showDeprecationText = require('./common.js').showDeprecationText;
+
+showDeprecationText('There is no equivalent command in the Azure CLI - this feature is deprecated and replaced with Azure Monitor');
 
 program
   .description('Listen to the operations monitoring endpoint of your IoT Hub instance (must be enabled in the portal)')
