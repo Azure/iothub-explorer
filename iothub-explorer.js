@@ -10,6 +10,7 @@ var packageJson = require('./package.json');
 program
   .version(packageJson.version)
   .usage('[options] <command> [command-options] [command-args]')
+  .alias('iotex')
   .command('login', 'start a session on your IoT hub')
   .command('logout', 'terminate the current session on your IoT hub')
   .command('list', 'list the device identities currently in your IoT hub device registry')
