@@ -54,7 +54,7 @@ function verifySettle(arg) {
 
 function verifyProtocol(arg) {
   var lowerCaseArg = arg.toLowerCase();
-  if (lowerCaseArg !== 'amqp' && lowerCaseArg !== 'amqp-ws' && lowerCaseArg !== 'http' && lowerCaseArg !== 'mqtt') {
+  if (lowerCaseArg !== 'amqp' && lowerCaseArg !== 'amqp-ws' && lowerCaseArg !== 'http' && lowerCaseArg !== 'mqtt' && lowerCaseArg !== 'mqtt-ws') {
     inputError('--protocol can take only take one of the following values: \'amqp\', \'amqp-ws\', \'mqtt\', \'mqtt-ws\' or \'http\'');
   } else {
     return lowerCaseArg;
