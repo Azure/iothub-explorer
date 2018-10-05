@@ -1,0 +1,43 @@
+resources:
+- repo: self
+phases:
+- phase: Phase_1
+  displayName: Ubuntu 16.04
+
+  condition: succeeded()
+  queue:
+    name: Hosted Ubuntu 1604
+  steps:
+  - task: NodeTool@0
+    displayName: 'Use Node 6.x'
+
+
+  - script: 'npm install'
+    displayName: 'npm install'
+
+  - script: 'npm run ci'
+    displayName: 'run iothub-explorer tests'
+    env:
+      IOTHUB_CONNECTION_STRING: $(LINUX-IOTHUB-CONNECTION-STRING)
+
+
+- phase: Phase_2
+  displayName: Windows
+
+  condition: succeeded()
+  queue:
+    name: Hosted VS2017
+  steps:
+  - task: NodeTool@0
+    displayName: 'Use Node 8.x'
+    inputs:
+      versionSpec: 8.x
+
+
+  - script: 'npm install'
+    displayName: 'npm install'
+
+  - script: 'npm run ci'
+    displayName: 'run iothub-explorer tests'
+    env:
+      IOTHUB_CONNECTION_STRING: $(WINDOWS-IOTHUB-CONNECTION-STRING)
