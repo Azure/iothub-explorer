@@ -6,6 +6,8 @@
 
 # iothub-explorer
 
+![Build Status](https://azure-iot-sdks.visualstudio.com/azure-iot-sdks/_apis/build/status/iothub-explorer)
+
 A CLI tool to manage device identities in your IoT hub registry, send and receive messages and files from your devices, and monitor your IoT hub operations.
 
 **iothub-explorer** also lets you simulate a device connected to your IoT hub.
