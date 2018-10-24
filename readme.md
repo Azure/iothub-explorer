@@ -2,7 +2,8 @@
 
 [![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
 
-*`iothub-explorer` will be retired on November 31st, 2018 and has been replaced by the [Azure CLI IoT Extension](https://aka.ms/iotcli).*
+*`iothub-explorer` will be retired on November 30th, 2018 and has been replaced by the [Azure CLI IoT 
+Extension](https://aka.ms/iotcli).*
 
 # iothub-explorer
 
